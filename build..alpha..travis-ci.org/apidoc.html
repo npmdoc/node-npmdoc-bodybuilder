@@ -63,6 +63,15 @@
 
         <li>
 
+            <a class="apidocElementLiA" href="#apidoc.element.bodybuilder.bodybuilder">
+            function <span class="apidocSignatureSpan"></span>bodybuilder
+            <span class="apidocSignatureSpan">()</span>
+            </a>
+
+        </li>
+
+        <li>
+
             <span class="apidocSignatureSpan">object <span class="apidocSignatureSpan">bodybuilder.</span>aggregation_builder</span>
 
         </li>
@@ -189,6 +198,114 @@
 
 <div class="apidocSectionDiv">
 <h1><a href="#apidoc.module.bodybuilder" id="apidoc.module.bodybuilder">module bodybuilder</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.bodybuilder.bodybuilder" id="apidoc.element.bodybuilder.bodybuilder">
+        function <span class="apidocSignatureSpan"></span>bodybuilder
+        <span class="apidocSignatureSpan">()</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function bodybuilder() {
+  var body = {};
+
+  return Object.assign({
+<span class="apidocCodeCommentSpan">    /**
+     * Set a sort direction on a given field.
+     *
+     * @param  {String} field             Field name.
+     * @param  {String} [direction=&#x27;asc&#x27;] A valid direction: &#x27;asc&#x27; or &#x27;desc&#x27;.
+     * @returns {bodybuilder} Builder.
+     */
+</span>    sort: function sort(field) {
+      var direction = arguments.length &#x3e; 1 &#x26;&#x26; arguments[1] !== undefined ? arguments[1] : &#x27;asc&#x27;;
+
+      body.sort = body.sort || [];
+
+      if ((0, _isArray2.default)(field)) {
+
+        if ((0, _isPlainObject2.default)(body.sort)) {
+          body.sort = [body.sort];
+        }
+
+        if ((0, _isArray2.default)(body.sort)) {
+          (0, _each2.default)(field, function (sorts) {
+            (0, _each2.default)(sorts, function (value, key) {
+              (0, _utils.sortMerge)(body.sort, key, value);
+            });
+          });
+        }
+      } else {
+        (0, _utils.sortMerge)(body.sort, field, direction);
+      }
+      return this;
+    },
+
+
+    /**
+     * Set a *from* offset value, for paginating a query.
+     *
+     * @param  {Number} quantity The offset from the first result you want to
+     *                           fetch.
+     * @returns {bodybuilder} Builder.
+     */
+    from: function from(quantity) {
+      body.from = quantity;
+      return this;
+    },
+
+
+    /**
+     * Set a *size* value for maximum results to return.
+     *
+     * @param  {Number} quantity Maximum number of results to return.
+     * @returns {bodybuilder} Builder.
+     */
+    size: function size(quantity) {
+      body.size = quantity;
+      return this;
+    },
+
+
+    /**
+     * Set any key-value on the elasticsearch body.
+     *
+     * @param  {String} k Key.
+     * @param  {any}    v Value.
+     * @returns {bodybuilder} Builder.
+     */
+    rawOption: function rawOption(k, v) {
+      body[k] = v;
+      return this;
+    },
+
+
+    /**
+     * Collect all queries, filters, and aggregations and build the entire
+     * elasticsearch query.
+     *
+     * @param  {string} [version] (optional) Pass `&#x27;v1&#x27;` to build for the
+     *                            elasticsearch 1.x query dsl.
+     *
+     * @return {Object} Elasticsearch query body.
+     */
+    build: function build(version) {
+      var queries = this.getQuery();
+      var filters = this.getFilter();
+      var aggregations = this.getAggregations();
+
+      if (version === &#x27;v1&#x27;) {
+        return _buildV1(body, queries, filters, aggregations);
+      }
+
+      return _build(body, queries, filters, aggregations);
+    }
+  }, (0, _queryBuilder2.default)(), (0, _filterBuilder2.default)(), (0, _aggregationBuilder2.default)());
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
 
 
 
