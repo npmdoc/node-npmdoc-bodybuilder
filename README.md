@@ -113,7 +113,8 @@
         "test": "babel-tape-runner test/* | tap-spec",
         "watch:test": "tape-watch test/* -r babel-register -p tap-spec"
     },
-    "version": "2.1.0"
+    "version": "2.1.0",
+    "bin": {}
 }
 ```
 
